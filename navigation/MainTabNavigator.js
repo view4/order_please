@@ -8,7 +8,9 @@ import HowMuch from '../screens/first'
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Order from '../screens/order';
-
+import ScannerPage from '../screens/scanner';
+import TablePlanPage from '../screens/tablePlan';
+import ThanksPage from '../screens/Thanks';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -17,13 +19,15 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: Order,
+    Home: HowMuch,
+    Scanner: ScannerPage,
+    Thanks: ThanksPage
   },
   config
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Customer',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -40,20 +44,20 @@ HomeStack.path = '';
 
 const LinksStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Links: TablePlanPage,
   },
   config
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+  tabBarLabel: 'Waiter/Waitress',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
   ),
 };
 
 LinksStack.path = '';
-
+/*
 const SettingsStack = createStackNavigator(
   {
     Settings: SettingsScreen,
@@ -69,11 +73,11 @@ SettingsStack.navigationOptions = {
 };
 
 SettingsStack.path = '';
-
+*/
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
-  SettingsStack,
+  //SettingsStack,
 });
 
 tabNavigator.path = '';

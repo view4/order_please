@@ -10,7 +10,10 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import Input from '../components/Input'
+import Input from '../components/Input';
+import Button from '../components/button';
+//import { createAppContainer } from 'react-navigation';
+//import { createStackNavigator } from 'react-navigation-stack';
 
 export default class HowMuch extends React.Component {
   state={
@@ -18,6 +21,9 @@ export default class HowMuch extends React.Component {
   }
   receivePhoneNumber = (val) => {
 	this.setState({phoneNumber:val})
+  }
+  handleSubmit = () => {
+   this.props.navigation.navigate('Scanner');
   }
   render() {
 	  const { phoneNumber } = this.state;
@@ -31,6 +37,7 @@ export default class HowMuch extends React.Component {
 			  onChangeText={this.receivePhoneNumber}
 			/>
 		</View>
+		<Button text={'send'} handleButtonPress={this.handleSubmit} />
 	    </View>
 	  );
   }
