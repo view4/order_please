@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 
 import Button from '../components/button';
-import {activeTable} from '../data/activeTableData';
+import { activeTable } from '../data/activeTableData';
+
+import { activeTableMember, setActiveTableMember } from '../data/activeTableMember';
 
 
 
@@ -25,7 +27,7 @@ export default class TablePage extends React.Component {
 	this.setState({tableMembers: Object.values(activeTable)});
   }
   handlePersonPress = (person) => {
-   console.log(person)
+   setActiveTableMember(person)
    this.props.navigation.navigate('Menu');
   }
   sendBill = () => {

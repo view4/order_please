@@ -13,7 +13,9 @@ import {
 } from 'react-native';
 import Input from '../components/Input';
 import Dish from '../components/Dish';
+
 import dishes from '../data/dishes';
+import { activeTableMember, addDishToTableMember } from '../data/activeTableMember';
 
 const starters = Object.values(dishes.starters);
 const mains = Object.values(dishes.mains);
@@ -21,22 +23,26 @@ const deserts = Object.values(dishes.deserts);
 
 export default class Order extends React.Component {
   state={
-    searchField:''
+    searchField:'',
+    tableMember: {}
+  }
+  componentWillMount() {
+	this.setState({tableMember: activeTableMember})
   }
   searchDish = (val) => {
 	this.setState({searchField: val});
   }
-  handleDishPress = (name) => {
-	console.log('dish press');
-	console.log(name)
+  handleDishPress = (dish) => {
+	addDishToTableMember(dish);
+	console.log(activeTableMember);
+
   }
   render() {
-	console.log(starters)
-	const { searchField } = this.state;
+	const { searchField, tableMember } = this.state;
 	  return (
 	    <View style={styles.container}>
 		<View style={styles.nameContainer}>
-			<Text> name here</Text>
+			<Text> {tableMember.name}</Text>
 		</View>
 		<Input
 		  inputValue={searchField}
@@ -47,7 +53,7 @@ export default class Order extends React.Component {
 			{starters.map( dish => (
 			  <Dish 
 			    dish={dish}
-			    handleOnPress={(dish) => this.handleDishPress(dish)} />
+			    handleOnPress={() => this.handleDishPress(dish)} />
 			))}
 		</View>
 		<View style={styles.startersContainer}>
@@ -55,14 +61,14 @@ export default class Order extends React.Component {
 			{mains.map( dish => (
 			  <Dish 
 			    dish={dish}
-			    handleOnPress={(dish) => this.handleDishPress(dish)} />
+			    handleOnPress={() => this.handleDishPress(dish)} />
 			))}
 		<View style={styles.startersContainer}>
 			<Text> Deserts</Text>
-			{starters.map( dish => (
+			{deserts.map( dish => (
 			  <Dish 
 			    dish={dish}
-			    handleOnPress={(dish) => this.handleDishPress(dish)} />
+			    handleOnPress={() => this.handleDishPress(dish)} />
 			))}
 		</View>
 		</View>
