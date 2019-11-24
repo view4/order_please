@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, Text, TouchableOpacity } from 'react-native';
 //import { inputPlaceholder } from '../utils/Colors';
-const Button = ({ text, handleButtonPress, }) => (
+const Button = ({ text, handleButtonPress,customStyle }) => (
 	<TouchableOpacity onPress={handleButtonPress}>
-	  <View>
+	  <View style={customStyle || styles.button}>
 	    <Text>
 	      {text}
 	    </Text>
@@ -11,12 +11,14 @@ const Button = ({ text, handleButtonPress, }) => (
 	</TouchableOpacity>
 );
 const styles = StyleSheet.create({
-  input: {
-    paddingTop: 10,
-    paddingRight: 15,
-    fontSize: 34,
-    color: 'orange',
-    fontWeight: '500'
+  button: {
+    padding: 15,
+    fontSize: 18,
+    color: 'dark-gray',
+    fontWeight: '500',
+    borderWidth: 1,
+    borderColor: 'black',
+    fontFamil: 'arial'
   }
 });
 export default Button;

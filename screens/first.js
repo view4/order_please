@@ -17,16 +17,21 @@ import Button from '../components/button';
 
 export default class HowMuch extends React.Component {
   state={
-    phoneNumber: ''
+    phoneNumber: '',
+    Name: ''
   }
   receivePhoneNumber = (val) => {
-	this.setState({phoneNumber:val})
+	this.setState({phoneNumber:val});
   }
   handleSubmit = () => {
    this.props.navigation.navigate('Scanner');
   }
+  receiveName = (val) => {
+	this.setState({Name: val});
+  }
   render() {
-	  const { phoneNumber } = this.state;
+	  const { phoneNumber, Name } = this.state;
+
 	  return (
 	    <View style={styles.container}>
 		<Text style={styles.title}> How Much </Text>
@@ -36,8 +41,13 @@ export default class HowMuch extends React.Component {
 			  label={'Phone Number'}
 			  onChangeText={this.receivePhoneNumber}
 			/>
+			<Input 
+			  inputValue={Name}
+			  label={'First Name or Nickname'}
+			  onChangeText={this.receiveName}
+			/>
 		</View>
-		<Button text={'send'} handleButtonPress={this.handleSubmit} />
+		<Button text={'START'} handleButtonPress={this.handleSubmit} />
 	    </View>
 	  );
   }
@@ -48,6 +58,13 @@ export default class HowMuch extends React.Component {
 const styles = StyleSheet.create({
   title: {
     fontSize: 36,
-    alignItems: 'center'
+    alignItems: 'center',
+    fontFamily: 'arial'
+  },
+  container: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '100%',
+    padding: '36px'
   }
 })

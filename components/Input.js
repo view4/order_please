@@ -3,15 +3,15 @@ import { StyleSheet, TextInput, View, Text } from 'react-native';
 //import { inputPlaceholder } from '../utils/Colors';
 const Input = ({ inputValue, onChangeText, onDoneAddItem, label }) => (
 	<View>
-	  <Text>
+	  <Text style={styles.label}>
 	    {label}
 	  </Text>
 	  <TextInput
 	    style={styles.input}
 	    value={inputValue}
 	    onChangeText={onChangeText}
-	    placeholder="Type here to add note."
-	    placeholderTextColor={'orange'}
+	    placeholder="Type here..."
+	    placeholderTextColor={'grey'}
 	    multiline={true}
 	    autoCapitalize="sentences"
 	    underlineColorAndroid="transparent"
@@ -28,9 +28,18 @@ const styles = StyleSheet.create({
   input: {
     paddingTop: 10,
     paddingRight: 15,
-    fontSize: 34,
-    color: 'orange',
-    fontWeight: '500'
+    fontSize: 18,
+    color: 'black',
+    fontWeight: '500',
+    borderWidth: 1,
+    borderColor: 'black',
+    width: '100',
+    marginBottom: '36px'
+
+  },
+  label: {
+    fontFamily: 'arial',
+    letterSpacing: '1'
   }
 });
 export default Input;

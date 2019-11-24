@@ -17,20 +17,21 @@ import BarcodeScanner from '../components/barcodeScanner';
 export default class ScannerPage extends React.Component{
   render  () {
 	return (
-	  <TouchableOpacity onPress={ () => this.props.navigation.navigate('Thanks')}>
+	  <TouchableOpacity style={styles.container} onPress={ () => this.props.navigation.navigate('Thanks')}>
 	    <View>
 		<BarcodeScanner />
 	    </View>
 	  </TouchableOpacity>
 )}}
-/*
+
 const styles = StyleSheet.create({
-  input: {
-    paddingTop: 10,
-    paddingRight: 15,
-    fontSize: 34,
-    color: 'orange',
+  container: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 22,
+    color: 'black',
     fontWeight: '500'
   }
 });
-*/
+

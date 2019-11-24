@@ -11,6 +11,7 @@ import Order from '../screens/order';
 import ScannerPage from '../screens/scanner';
 import TablePlanPage from '../screens/tablePlan';
 import ThanksPage from '../screens/Thanks';
+import TablePage from '../screens/table'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -44,7 +45,9 @@ HomeStack.path = '';
 
 const LinksStack = createStackNavigator(
   {
-    Links: TablePlanPage,
+    TablePlan: TablePlanPage,
+    Table: TablePage,
+    Menu: Order
   },
   config
 );

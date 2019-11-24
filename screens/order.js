@@ -31,6 +31,7 @@ export default class Order extends React.Component {
 	console.log(name)
   }
   render() {
+	console.log(starters)
 	const { searchField } = this.state;
 	  return (
 	    <View style={styles.container}>
