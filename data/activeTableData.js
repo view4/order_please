@@ -9,4 +9,14 @@ function changeActiveTableValue(value) {
 	}*/
 }
 
-export {activeTable, changeActiveTableValue};
+function getAllTableMembers() {
+	var tableMembers = Object.values(activeTable);
+	var allNames = [];
+	for (var i = 0; i< tableMembers.length; i++) {
+		allNames.push(tableMembers[i].name);
+	};
+	console.log(allNames)
+	return allNames;
+
+}
+export {activeTable, changeActiveTableValue, getAllTableMembers};

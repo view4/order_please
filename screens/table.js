@@ -23,7 +23,8 @@ changeActiveTableValue(tables[1])
 export default class TablePage extends React.Component {
   state={
     phoneNumber: '',
-    tableMembers: []
+    tableMembers: [], 
+    hasBillBeenSent: false,
   }
   componentDidMount() {
 	this.setState({tableMembers: Object.values(activeTable)});
@@ -33,17 +34,17 @@ export default class TablePage extends React.Component {
    this.props.navigation.navigate('Menu');
   }
   sendBill = () => {
-	consle.log('handle send bill press.')
+	this.setState({hasBillBeenSent: true});
   } 
   render() {
-	var { tableMembers } = this.state;
+	var { tableMembers, hasBillBeenSent } = this.state;
 	console.log(tableMembers)
 	  return (
 	    <View style={styles.container}>
 	    	<View style={styles.tableMembersContainer}>
 		
 		{
-			tableMembers.map(person => ( console.log('being called'),
+			tableMembers.map(person => (
 				<Button 
 				  text={person.name.substring(0,3).toUpperCase()}
 				  handleButtonPress={() => this.handlePersonPress(person)}
@@ -57,7 +58,14 @@ export default class TablePage extends React.Component {
 	   	</View>
 
 	    	<View style={styles.SendBill}>
-		  <Button text={'Send Bill'} handleButtonPress={this.sendBill} />
+		 {
+			hasBillBeenSent ? (<Text> 
+			    The bill has been sent to the members of the table
+			  </Text>) : (<Button 
+			    text={'Send Bill'}
+			    handleButtonPress={this.sendBill} 
+			  />
+		)} 
 	   	</View>
 	    </View>
 	  );
