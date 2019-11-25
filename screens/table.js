@@ -12,10 +12,12 @@ import {
 } from 'react-native';
 
 import Button from '../components/button';
-import { activeTable } from '../data/activeTableData';
 
+import tables from '../data/tablesData'; 
 import { activeTableMember, setActiveTableMember } from '../data/activeTableMember';
+import {activeTable, changeActiveTableValue} from '../data/activeTableData';
 
+changeActiveTableValue(tables[1])
 
 
 export default class TablePage extends React.Component {
@@ -34,34 +36,27 @@ export default class TablePage extends React.Component {
 	consle.log('handle send bill press.')
   } 
   render() {
-	var { tableMembers } = this.state
+	var { tableMembers } = this.state;
+	console.log(tableMembers)
 	  return (
 	    <View style={styles.container}>
-	    	<View style={styles.container}>
+	    	<View style={styles.tableMembersContainer}>
 		
 		{
-			tableMembers.map(person => (
+			tableMembers.map(person => ( console.log('being called'),
 				<Button 
-				  text={person.name}
+				  text={person.name.substring(0,3).toUpperCase()}
 				  handleButtonPress={() => this.handlePersonPress(person)}
 				  key={person.name}
+				  customStyle={styles.button}
 				/>
 
 			))
 		}
-
-		 {/* <Button text={'person one'} handleButtonPress={this.handlePersonPress} />
-		  <Button text={'person two'} handleButtonPress={this.handlePersonPress} />
-		  <Button text={'person 3'} handleButtonPress={this.handlePersonPress} />
-
-		  <Button text={'person 4'} handleButtonPress={this.handlePersonPress} />
-		  <Button text={'person 5'} handleButtonPress={this.handlePersonPress} />
-		  <Button text={'person 6'} handleButtonPress={this.handlePersonPress} />*/}
-	   	</View>
-	    	<View style={styles.container}>
 		  <Button text={'For the Table'} handleButtonPress={this.handlePersonPress} />
 	   	</View>
-	    	<View style={styles.container}>
+
+	    	<View style={styles.SendBill}>
 		  <Button text={'Send Bill'} handleButtonPress={this.sendBill} />
 	   	</View>
 	    </View>
@@ -72,8 +67,27 @@ export default class TablePage extends React.Component {
 
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 36,
+  container: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
     alignItems: 'center'
+  },
+  tableMembersContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    width: '30%',
+    padding: 18
+  },
+  button: {
+    width: '60',
+    padding: 15,
+    borderWidth: 1,
+    borderColor: 'black',
+    minHeight: '54px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 7
   }
-})
+});

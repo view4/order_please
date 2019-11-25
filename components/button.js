@@ -13,12 +13,13 @@ const Button = ({ text, handleButtonPress,customStyle }) => (
 const styles = StyleSheet.create({
   button: {
     padding: 15,
-    fontSize: 18,
-    color: 'dark-gray',
-    fontWeight: '500',
     borderWidth: 1,
     borderColor: 'black',
-    fontFamil: 'arial'
+    minWidth: '72px',
+    minHeight: '54px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 18
   }
 });
 export default Button;

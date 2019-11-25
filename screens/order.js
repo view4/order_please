@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Input from '../components/Input';
 import Dish from '../components/Dish';
-
+import Button from '../components/button';
 import dishes from '../data/dishes';
 import { activeTableMember, addDishToTableMember } from '../data/activeTableMember';
 
@@ -42,7 +42,7 @@ export default class Order extends React.Component {
 	  return (
 	    <View style={styles.container}>
 		<View style={styles.nameContainer}>
-			<Text> {tableMember.name}</Text>
+			<Button text={tableMember.name} />
 		</View>
 		<Input
 		  inputValue={searchField}
