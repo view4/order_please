@@ -1,101 +1,112 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  TextInput,
+  Dimensions,
   View,
 } from 'react-native';
+//import { Dimensions } from 'Dimensions';
 
 import Button from '../components/button';
 
-import tables from '../data/tablesData'; 
-import { activeTableMember, setActiveTableMember } from '../data/activeTableMember';
-import {activeTable, changeActiveTableValue} from '../data/activeTableData';
+import {  setActiveTableMember } from '../data/activeTableMember';
+import {activeTable} from '../data/activeTableData';
+const { height, width } = Dimensions.get('window');
 
-changeActiveTableValue(tables[1])
 
 
 export default class TablePage extends React.Component {
-  state={
+  state = {
     phoneNumber: '',
     tableMembers: [], 
     hasBillBeenSent: false,
-  }
+  };
+
+  componentWillMount() {
+    //console.log(activeTable)
+    this.updateTableMembers()
+  };
   componentDidMount() {
-	this.setState({tableMembers: Object.values(activeTable)});
+    this.willFocusSubscription = this.props.navigation.addListener('willFocus', () => this.updateTableMembers() )
   }
+  updateTableMembers () {
+    this.setState({tableMembers: Object.values(activeTable)});
+  };
   handlePersonPress = (person) => {
    setActiveTableMember(person)
    this.props.navigation.navigate('Menu');
-  }
+  };
+
   sendBill = () => {
-	this.setState({hasBillBeenSent: true});
-  } 
+	  this.setState({hasBillBeenSent: true});
+  } ;
+
   render() {
-	var { tableMembers, hasBillBeenSent } = this.state;
-	console.log(tableMembers)
+    var { tableMembers, hasBillBeenSent } = this.state;
 	  return (
 	    <View style={styles.container}>
+
 	    	<View style={styles.tableMembersContainer}>
 		
-		{
-			tableMembers.map(person => (
-				<Button 
-				  text={person.name.substring(0,3).toUpperCase()}
-				  handleButtonPress={() => this.handlePersonPress(person)}
-				  key={person.name}
-				  customStyle={styles.button}
-				/>
-
-			))
-		}
-		  <Button text={'For the Table'} handleButtonPress={this.handlePersonPress} />
-	   	</View>
-
+      {
+        tableMembers.map(person => (
+          <Button 
+            text={person.name}
+            handleButtonPress={() => this.handlePersonPress(person)}
+            key={person.name}
+            customStyle={styles.button}
+            total={person.total}
+          />
+        ))
+      }
+	   	  </View>
+         <Button text={'For the Table'} handleButtonPress={this.handlePersonPress} customStyle={styles.button}/>
 	    	<View style={styles.SendBill}>
-		 {
-			hasBillBeenSent ? (<Text> 
-			    The bill has been sent to the members of the table
-			  </Text>) : (<Button 
-			    text={'Send Bill'}
-			    handleButtonPress={this.sendBill} 
-			  />
-		)} 
-	   	</View>
+      {
+        hasBillBeenSent ? (<Text style={styles.emailMessage}> 
+            The bill has been emailed to members of the table
+          </Text>) : (<Button 
+            text={'Send Bill'}
+            handleButtonPress={this.sendBill} 
+          />
+      )} 
+	   	  </View>
 	    </View>
 	  );
   }
-
 }
-
 
 const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   tableMembersContainer: {
-    flexDirection: 'row',
     flexWrap: 'wrap',
+    flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '30%',
-    padding: 18
+    width: '90%',
+    padding: 10,
+    marginTop: '7%',
+    height: (height / 2)  - 18
   },
   button: {
-    width: '60',
     padding: 15,
     borderWidth: 1,
     borderColor: 'black',
-    minHeight: '54px',
+    minHeight: 36,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 7
+    margin: 7,
+    width: (width / 3) + 7
+  },
+  emailMessage:{
+    color: 'blue'
+  },
+  sendBill: {
+    alignSelf: 'flex-end',
+    marginBottom: 18
   }
 });

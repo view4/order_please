@@ -18,6 +18,9 @@ export default class BarcodeScanner extends React.Component {
     this.setState({ hasCameraPermission: status === 'granted' });
   };
 
+  handleBarCodeScanned = () => {
+    this.props.navigation.navigate('Thanks')
+  }
   render() {
     const { hasCameraPermission, scanned } = this.state;
 
@@ -36,7 +39,7 @@ export default class BarcodeScanner extends React.Component {
         }}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
+          style={styles.scanner}
         />
 
         {scanned && (
@@ -50,4 +53,11 @@ export default class BarcodeScanner extends React.Component {
     this.setState({ scanned: true });
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
-}
+};
+
+const styles = StyleSheet.create({
+  scanner: {
+    height: 300,
+    width: 300
+  }
+});

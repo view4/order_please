@@ -2,36 +2,42 @@ const dishes = {
   starters: {
     'Lentil Hummus': {
        name: 'Lentil Hummus',
-       price: 6.5, 
+       price: 30, 
      },
     'Soup of the Day': {
        name: 'Soup of the Day',
-       price: 5, 
+       price: 25, 
      },
+     'Asian Salad':{
+       name: 'Asian Salad',
+       price: 30,
+     }
   },
   mains: {
     'Tuna Steak': {
       name: 'Tuna Steak',
-      price: 16,
+      price: 65,
     },
     'Black Bean Stew': {
       name: 'Black Bean Stew',
-      price: 12.5,
+      price: 50,
+    },
+    'Pizza': {
+      name: 'Pizza',
+      price: 55,
     }
   },
   deserts: {
     'Apple Pie': {
       name: 'Apple Pie',
-      price: 8,
+      price: 25,
     },
     'Sticky Toffee Pudding': {
       name: 'Sticky Toffee Pudding',
-      price: 8.5,
+      price: 30,
     },
   },
 };
-console.log(dishes)
-
 export default dishes;
 
 

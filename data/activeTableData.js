@@ -15,8 +15,11 @@ function getAllTableMembers() {
 	for (var i = 0; i< tableMembers.length; i++) {
 		allNames.push(tableMembers[i].name);
 	};
-	console.log(allNames)
 	return allNames;
-
 }
-export {activeTable, changeActiveTableValue, getAllTableMembers};
+var activeTableNumber = 0;
+
+function setActiveTableNumber(num) {
+	activeTableNumber = num;
+}
+export {activeTable, changeActiveTableValue, getAllTableMembers, activeTableNumber, setActiveTableNumber};

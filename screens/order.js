@@ -1,68 +1,67 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  TextInput,
   View,
+  ScrollView
 } from 'react-native';
+
 import Input from '../components/Input';
 import Dish from '../components/Dish';
 import Button from '../components/button';
 import dishes from '../data/dishes';
-import { activeTableMember, addDishToTableMember, setActiveTableMember } from '../data/activeTableMember';
 
-import { activeTable, getAllTableMembers } from '../data/activeTableData';
+import { activeTableMember, addDishToTableMember, setActiveTableMember } from '../data/activeTableMember';
+import { activeTable, getAllTableMembers, activeTableNumber, changeActiveTableValue } from '../data/activeTableData';
+import { updateTableMember, tables } from '../data/tablesData';
 
 const starters = Object.values(dishes.starters);
 const mains = Object.values(dishes.mains);
 const deserts = Object.values(dishes.deserts);
-
 const allDishes = Object.values({
 	...dishes.starters,
 	...dishes.mains,
 	...dishes.deserts	
 });
 
-var allTableMembers = getAllTableMembers();
 
 export default class Order extends React.Component {
-  state={
+  state = {
     searchField:'',
     tableMember: {},
     tableMembers: []
-  }
+  };
+
   componentWillMount() {
 	var tableMembers = Object.values(activeTable);
 	for (var i = 0; i < tableMembers.length; i++){
 		tableMembers[i] = tableMembers[i].name;
-	}
+	};
 	this.setState({
 	  tableMember: activeTableMember,
 	  tableMembers
-	})
-  }
+	});
+  };
+
   searchDish = (val) => {
 	this.setState({searchField: val});
-  }
+  };
+
   handleDishPress = (dish) => {
 	addDishToTableMember(dish);
-	console.log(activeTableMember); // This shows functionality is working.
-
+	this.updateTableData()
+	//console.log(activeTableMember); // This shows functionality is working.
+  };
+  updateTableData = () => {
+	updateTableMember(activeTableNumber, activeTableMember);
+	changeActiveTableValue(tables[activeTableNumber])
   }
   handlePersonSwitch = (indexDiff) => {
-
 	var {tableMember, tableMembers} = this.state;
-	
 	var currentIndex = tableMembers.indexOf(tableMember.name);
 	var futureIndex = currentIndex + indexDiff;
-
 	if(futureIndex >= tableMembers.length) {
 		futureIndex = 0;
 	} else if(futureIndex < 0 ) {
@@ -73,25 +72,26 @@ export default class Order extends React.Component {
 	var newActiveTableMember = activeTable[newActiveTableMemberName];
 	setActiveTableMember(newActiveTableMember);
 	this.setState({tableMember: newActiveTableMember});
-	
-  }
+  };
+
   displaySearchResults = () => {
     var { searchField } = this.state;
     var searchResults = [];
     for (var i = 0; i < allDishes.length; i++) {
-	if(allDishes[i].name.toLowerCase().includes(searchField.toLowerCase())) {
-	  searchResults.push(allDishes[i]);
-	}
-    }
+		if(allDishes[i].name.toLowerCase().includes(searchField.toLowerCase())) {
+		searchResults.push(allDishes[i]);
+		};
+	};
+	
     const results = searchResults.map( dish => (
-	<Dish 
-	  dish={dish}
-          handleOnPress={this.handleDishPress}
-	/>
-      )
-    )	
+		<Dish 
+			dish={dish}
+			handleOnPress={() => this.handleDishPress(dish)}
+		/>
+    ))	
     return results
-  }
+  };
+
   render() {
 	const { searchField, tableMember } = this.state;
 
@@ -115,34 +115,44 @@ export default class Order extends React.Component {
 		  onChangeText = {this.searchDish}
 		 />
 		{searchField ? this.displaySearchResults() : (
+			<View style={styles.allDishes}>
+				<View style={styles.scrollContainer}>
+					<ScrollView>
 
-		  <View style={styles.allDishes}>
-		    <View style={styles.startersContainer}>
-		       	    <Text style={styles.titles}> Starters</Text>
-			    {starters.map( dish => (
-			      <Dish 
-			        dish={dish}
-			        handleOnPress={() => this.handleDishPress(dish)} />
-			    ))}
-		    </View>
-		    <View style={styles.startersContainer}>
-			    <Text style={styles.titles}> Mains</Text>
-			    {mains.map( dish => (
-			      <Dish 
-			        dish={dish}
-			        handleOnPress={() => this.handleDishPress(dish)} />
-	  		    ))}
-                    </View>
-		    <View style={styles.startersContainer}>
-			    <Text style={styles.titles}> Deserts</Text>
-			    {deserts.map( dish => (
-			      <Dish 
-			        dish={dish}
-			        handleOnPress={() => this.handleDishPress(dish)} />
-			    ))}
-		    </View>
-	          </View>
-		  )}
+						<View style={styles.startersContainer}>
+							<Text style={styles.titles}> Starters</Text>
+							{starters.map( dish => (
+								<Dish 
+									dish={dish}
+									key={dish.price+dish.name}
+									handleOnPress={() => this.handleDishPress(dish)}
+									/>
+							))}
+						</View>
+						<View style={styles.startersContainer}>
+							<Text style={styles.titles}> Mains</Text>
+							{mains.map( dish => (
+								<Dish 
+									dish={dish}
+									key={dish.price+dish.name}
+									handleOnPress={() => this.handleDishPress(dish)} 
+									/>
+							))}
+						</View>
+						<View style={styles.startersContainer}>
+							<Text style={styles.titles}> Deserts</Text>
+							{deserts.map( dish => (
+								<Dish 
+									dish={dish}
+									key={dish.price+dish.name}
+									handleOnPress={() => this.handleDishPress(dish)} 
+									/>
+							))}
+						</View>
+						</ScrollView>
+					</View>
+				</View>
+			)}
 	      </View>
 	  );
   }
@@ -152,6 +162,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center'
+   },
+   scrollContainer: {
+	flex: 1
    },
   title: {
     fontSize: 36,
@@ -165,9 +178,8 @@ const styles = StyleSheet.create({
 
   },
   allDishes: {
-    overflow: 'scroll',
     height: 220,
-    width: '90%'
+	width: '90%',
   },
   titles: {
     fontWeight: '600',

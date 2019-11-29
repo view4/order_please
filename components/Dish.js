@@ -17,7 +17,7 @@ const Dish = ({ dish, handleOnPress }) => (
 	<TouchableOpacity onPress={handleOnPress}>
 	  <View style={styles.dishContainer}>
 	   <Text style={styles.price}>
-	     {dish.price}
+     ₪ {dish.price}
 	   </Text>
 	    <Text style={styles.name}>
 	      {dish.name}
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     marginBottom: 3
   },
   price: {
-    //borderRadius: '50%',
     borderWidth: 1,
     borderColor: 'black',
     marginRight: 10,
@@ -45,23 +44,23 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: 'white',
     backgroundColor: 'black',
-    width: 38,
-    height: 30,
+    width: 52,
+    height: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamil: 'arial'
+    fontFamily: 'arial',
+    textAlign:'center'
   },
   name: {
     borderWidth: 1,
     borderColor: 'black',
     padding: 10,
-    height: 30,
+    height: 45,
     width: 180,
     fontSize: 12,
     color: 'white',
     backgroundColor: 'black',
-    fontFamily: 'arial'
-
+    fontFamily: 'arial',
   }
 })
 

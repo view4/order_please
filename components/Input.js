@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, Text } from 'react-native';
-//import { inputPlaceholder } from '../utils/Colors';
-const Input = ({ inputValue, onChangeText, onDoneAddItem, label }) => (
+
+const Input = ({ inputValue, onChangeText, label }) => (
 	<View>
 	  <Text style={styles.label}>
 	    {label}
@@ -20,26 +20,24 @@ const Input = ({ inputValue, onChangeText, onDoneAddItem, label }) => (
 	    returnKeyType="done"
 	    autoCorrect={false}
 	    blurOnSubmit={true}
-	    onSubmitEditing={onDoneAddItem}
 	  />
 	</View>
 );
+
 const styles = StyleSheet.create({
   input: {
     paddingTop: 10,
     paddingRight: 15,
     fontSize: 18,
     color: 'black',
-    fontWeight: '500',
     borderWidth: 1,
     borderColor: 'black',
-    width: '100',
-    marginBottom: '36px'
-
+    width: '90%',
+    marginBottom: 36
   },
   label: {
     fontFamily: 'arial',
-    letterSpacing: '1'
   }
 });
+
 export default Input;
