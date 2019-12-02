@@ -37,7 +37,7 @@ export default class HowMuch extends React.Component {
         <View>
             <Input 
               inputValue={phoneNumber}
-              label={'Email Address'}
+              label={'Phone Number'}
               onChangeText={this.receivePhoneNumber}
             />
             <Input 
