@@ -5,6 +5,8 @@ import {
   Dimensions,
   View,
 } from 'react-native';
+
+import * as SMS from 'expo-sms';
 //import { Dimensions } from 'Dimensions';
 
 import Button from '../components/button';
@@ -13,7 +15,7 @@ import {  setActiveTableMember } from '../data/activeTableMember';
 import {activeTable} from '../data/activeTableData';
 const { height, width } = Dimensions.get('window');
 
-
+var customerPhoneNumber = '07826930019'
 
 export default class TablePage extends React.Component {
   state = {
@@ -37,7 +39,17 @@ export default class TablePage extends React.Component {
    this.props.navigation.navigate('Menu');
   };
 
-  sendBill = () => {
+  sendBill = async () => {
+    const isAvailable = await SMS.isAvailableAsync();
+    if (isAvailable && customerPhoneNumber) {
+      const { result } = await SMS.sendSMSAsync(
+        customerPhoneNumber,
+        'sample text message'
+      );
+
+    } else {
+      console.log('sms is not currently available')
+    }
 	  this.setState({hasBillBeenSent: true});
   } ;
 
