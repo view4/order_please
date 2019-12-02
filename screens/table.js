@@ -10,25 +10,22 @@ import * as SMS from 'expo-sms';
 //import { Dimensions } from 'Dimensions';
 
 import Button from '../components/button';
-
-import {  setActiveTableMember } from '../data/activeTableMember';
+import { customerPhoneNumbers } from '../data/customerPhoneNumbers';
+import { setActiveTableMember } from '../data/activeTableMember';
 import {activeTable} from '../data/activeTableData';
 const { height, width } = Dimensions.get('window');
 
-var customerPhoneNumber = '07826930019'
-
 export default class TablePage extends React.Component {
   state = {
-    phoneNumber: '',
     tableMembers: [], 
     hasBillBeenSent: false,
   };
 
   componentWillMount() {
-    //console.log(activeTable)
     this.updateTableMembers()
   };
   componentDidMount() {
+    console.log(customerPhoneNumbers)
     this.willFocusSubscription = this.props.navigation.addListener('willFocus', () => this.updateTableMembers() )
   }
   updateTableMembers () {
@@ -41,18 +38,28 @@ export default class TablePage extends React.Component {
 
   sendBill = async () => {
     const isAvailable = await SMS.isAvailableAsync();
-    if (isAvailable && customerPhoneNumber) {
+    if (isAvailable && customerPhoneNumbers.length) {
+      var billMessage = this.createMessageBill();
       const { result } = await SMS.sendSMSAsync(
-        customerPhoneNumber,
-        'sample text message'
+        customerPhoneNumbers,
+        billMessage
       );
-
     } else {
       console.log('sms is not currently available')
     }
 	  this.setState({hasBillBeenSent: true});
   } ;
+  createMessageBill () {
+    var {tableMembers} = this.state;
+    var message = 'The bill for your table is:';
 
+    for (var i = 0; i< tableMembers.length; i++){
+      if( tableMembers[i].total){
+        message = message.concat(`\n${tableMembers[i].name}, ₪${tableMembers[i].total}. `);
+      }
+    };
+    return message;
+  }
   render() {
     var { tableMembers, hasBillBeenSent } = this.state;
 	  return (

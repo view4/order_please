@@ -13,6 +13,7 @@ import {
 import Input from '../components/Input';
 import Button from '../components/button';
 
+import { addPhoneNumber } from '../data/customerPhoneNumbers';
 
 export default class HowMuch extends React.Component {
   state={
@@ -23,6 +24,7 @@ export default class HowMuch extends React.Component {
 	  this.setState({phoneNumber:val});
   }
   handleSubmit = () => {
+    addPhoneNumber(this.state.phoneNumber);
    this.props.navigation.navigate('Scanner');
   }
   receiveName = (val) => {
