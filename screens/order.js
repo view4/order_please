@@ -1,6 +1,6 @@
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
-
+import firebase  from '../firebase';
 import {
   StyleSheet,
   Text,
@@ -17,21 +17,25 @@ import { activeTableMember, addDishToTableMember, setActiveTableMember } from '.
 import { activeTable, getAllTableMembers, activeTableNumber, changeActiveTableValue } from '../data/activeTableData';
 import { updateTableMember, tables } from '../data/tablesData';
 
-const starters = Object.values(dishes.starters);
-const mains = Object.values(dishes.mains);
-const deserts = Object.values(dishes.deserts);
-const allDishes = Object.values({
-	...dishes.starters,
-	...dishes.mains,
-	...dishes.deserts	
-});
+//const starters = Object.values(dishes.starters);
+//const mains = Object.values(dishes.mains);
+//const deserts = Object.values(dishes.deserts);
+//const allDishes = Object.values({
+	//...dishes.starters,
+	//...dishes.mains,
+	//...dishes.deserts	
+//});
 
 
 export default class Order extends React.Component {
   state = {
     searchField:'',
     tableMember: {},
-    tableMembers: []
+	tableMembers: [],
+	starters:[],
+	mains:[],
+	desserts: [],
+	allDishes: []
   };
 
   componentWillMount() {
@@ -43,6 +47,27 @@ export default class Order extends React.Component {
 	  tableMember: activeTableMember,
 	  tableMembers
 	});
+	let menuRef = firebase.database().ref('menu');
+	menuRef.on('value', (snapshot) => {
+		const menu = snapshot.val();
+		console.log('firebase menu');
+			console.log(menu)
+		let starters = Object.values(menu.starters);
+		let mains = Object.values(menu.mains);
+		let desserts =  Object.values(menu.Desserts);
+		let allDishes = [
+			...starters,
+			...mains,
+			...desserts
+		];
+		console.log(allDishes)
+		this.setState({
+			starters, 
+			mains,
+			desserts,
+			allDishes
+		})
+		});
   };
 
   searchDish = (val) => {
@@ -75,7 +100,8 @@ export default class Order extends React.Component {
   };
 
   displaySearchResults = () => {
-    var { searchField } = this.state;
+	var { searchField, allDishes } = this.state;
+	
     var searchResults = [];
     for (var i = 0; i < allDishes.length; i++) {
 		if(allDishes[i].name.toLowerCase().includes(searchField.toLowerCase())) {
@@ -93,7 +119,7 @@ export default class Order extends React.Component {
   };
 
   render() {
-	const { searchField, tableMember } = this.state;
+	const { searchField, tableMember, starters, mains, desserts } = this.state;
 
 	  return (
 	    <View style={styles.container}>
@@ -141,7 +167,7 @@ export default class Order extends React.Component {
 						</View>
 						<View style={styles.startersContainer}>
 							<Text style={styles.titles}> Deserts</Text>
-							{deserts.map( dish => (
+							{desserts.map( dish => (
 								<Dish 
 									dish={dish}
 									key={dish.price+dish.name}
