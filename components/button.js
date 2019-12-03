@@ -10,7 +10,7 @@ const Button = ({ text, handleButtonPress,customStyle, total }) => (
 	  </View>
     <View>
       <Text> {total ? '₪' + total : null } </Text>
-      </View>
+    </View>
 	</TouchableOpacity>
 );
 

@@ -1,21 +1,16 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  TextInput,
   View,
 } from 'react-native';
+
 import Input from '../components/Input';
 import Button from '../components/button';
 
 import { addPhoneNumber } from '../data/customerPhoneNumbers';
 
-export default class HowMuch extends React.Component {
+export default class HomePage extends React.Component {
   state={
     phoneNumber: '',
     Name: ''
@@ -52,7 +47,6 @@ export default class HowMuch extends React.Component {
       </View>
 	  );
   }
-
 }
 
 const styles = StyleSheet.create({

@@ -1,14 +1,8 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  TextInput,
   View,
 } from 'react-native';
 
@@ -16,22 +10,17 @@ import {
 const Dish = ({ dish, handleOnPress }) => (
 	<TouchableOpacity onPress={handleOnPress}>
 	  <View style={styles.dishContainer}>
-	   <Text style={styles.price}>
-     ₪ {dish.price}
-	   </Text>
+	    <Text style={styles.price}>
+        ₪ {dish.price}
+	    </Text>
 	    <Text style={styles.name}>
 	      {dish.name}
 	    </Text>
 	  </View>
-        </TouchableOpacity>
-
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 36,
-    alignItems: 'center'
-  },
   dishContainer: {
     flexDirection: 'row',
     marginBottom: 3

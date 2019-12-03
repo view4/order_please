@@ -52,7 +52,6 @@ var tables = {
 			name: 'Sam',
 			total: 0,
 		},
-
 	},
 	4: {
 		'Louis':{

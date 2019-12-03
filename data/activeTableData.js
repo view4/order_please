@@ -1,12 +1,9 @@
 var activeTable = {};
+var activeTableNumber = 0;
+
 
 function changeActiveTableValue(value) {
 	activeTable = value;
-	/*activeTable.members = [];
-	for (person in value ){
-		
-		
-	}*/
 }
 
 function getAllTableMembers() {
@@ -16,10 +13,10 @@ function getAllTableMembers() {
 		allNames.push(tableMembers[i].name);
 	};
 	return allNames;
-}
-var activeTableNumber = 0;
+};
+
 
 function setActiveTableNumber(num) {
 	activeTableNumber = num;
-}
+};
 export {activeTable, changeActiveTableValue, getAllTableMembers, activeTableNumber, setActiveTableNumber};

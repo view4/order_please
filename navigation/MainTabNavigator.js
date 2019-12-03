@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HowMuch from '../screens/first'
+import HomePage from '../screens/homePage'
 import Order from '../screens/order';
 import ScannerPage from '../screens/scanner';
 import TablePlanPage from '../screens/tablePlan';
@@ -17,7 +17,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HowMuch,
+    Home: HomePage,
     Scanner: ScannerPage,
     Thanks: ThanksPage
   },

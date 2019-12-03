@@ -5,7 +5,6 @@ import {
   View,
 } from 'react-native';
 
-
 export default class ThanksPage extends React.Component {
   render() {
 	  return (

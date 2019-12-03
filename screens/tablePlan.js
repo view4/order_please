@@ -6,14 +6,11 @@ import {
 } from 'react-native';
 
 import Button from '../components/button';
-import {tables} from '../data/tablesData';
-import { changeActiveTableValue, setActiveTableNumber} from '../data/activeTableData';
+
+import { tables } from '../data/tablesData';
+import { changeActiveTableValue, setActiveTableNumber } from '../data/activeTableData';
 
 export default class TablePlanPage extends React.Component {
-  state = {
-    phoneNumber: ''
-  };
-
   handleTablePress = (val) => {
    changeActiveTableValue(tables[val])
    setActiveTableNumber(val)
@@ -56,14 +53,14 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center'
-
   },
+
   rowContainer: {
     flexDirection: 'row',
   }, 
+
   title: {
     fontSize: 18
   }
-})
 
-// Truth is I thinkt he width of each button can be set to be something anyway and I think it is fine. I do not know why these one's are taking up the whole width, and so I think some other styling changes could be done anyways. 
+})
