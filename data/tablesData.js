@@ -1,3 +1,5 @@
+// Table plan data for all tables. 
+
 var tables = {
 	1: {
 		'Doug':{
@@ -210,7 +212,15 @@ var tables = {
 };
 
 function updateTableMember(tableNumber, tableMemberData){
+	//Updates the data of a specific person on a table. 
 	tables[tableNumber][tableMemberData.name] = tableMemberData;
 }
 
-export {tables, updateTableMember};
+function addCustomerToTable(tableNumber, customerName){
+	tables[tableNumber][customerName] = {
+		name: customerName, 
+		total:0
+	}
+}
+
+export {tables, updateTableMember, addCustomerToTable};

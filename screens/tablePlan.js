@@ -12,6 +12,7 @@ import { changeActiveTableValue, setActiveTableNumber } from '../data/activeTabl
 
 export default class TablePlanPage extends React.Component {
   handleTablePress = (val) => {
+  // Sets active table in app data and navigates to the next page.
    changeActiveTableValue(tables[val])
    setActiveTableNumber(val)
    this.props.navigation.navigate('Table');

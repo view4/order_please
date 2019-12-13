@@ -8,22 +8,26 @@ import {
 import Input from '../components/Input';
 import Button from '../components/button';
 
-import { addPhoneNumber } from '../data/customerPhoneNumbers';
+import { addPhoneNumber, setCustomerName } from '../data/customerDetails';
 
 export default class HomePage extends React.Component {
   state={
     phoneNumber: '',
-    Name: ''
+    name: ''
   }
   receivePhoneNumber = (val) => {
+    // Stores client phone number
 	  this.setState({phoneNumber:val});
   }
   handleSubmit = () => {
+    //Stores client phone number in app data and navigates to next page.
     addPhoneNumber(this.state.phoneNumber);
+    setCustomerName(this.state.name);
    this.props.navigation.navigate('Scanner');
   }
   receiveName = (val) => {
-	  this.setState({Name: val});
+    // Stores client name
+	  this.setState({name: val});
   }
   render() {
 	  const { phoneNumber, Name } = this.state;

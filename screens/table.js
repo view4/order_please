@@ -10,7 +10,7 @@ const { height, width } = Dimensions.get('window');
 
 import Button from '../components/button';
 
-import { customerPhoneNumbers } from '../data/customerPhoneNumbers';
+import { customerPhoneNumbers } from '../data/customerDetails';
 import { setActiveTableMember } from '../data/activeTableMember';
 import { activeTable } from '../data/activeTableData';
 
@@ -24,17 +24,21 @@ export default class TablePage extends React.Component {
     this.updateTableMembers()
   };
   componentDidMount() {
+    //Updates values once returning to this screen from the 'ordering' screen
     this.willFocusSubscription = this.props.navigation.addListener('willFocus', () => this.updateTableMembers() )
   }
   updateTableMembers () {
+    // Add table members from data to component. 
     this.setState({tableMembers: Object.values(activeTable)});
   };
   handlePersonPress = (person) => {
+    // Sets active table member in the data, and then navigates to the next page. 
    setActiveTableMember(person)
    this.props.navigation.navigate('Menu');
   };
 
   sendBill = async () => {
+    // Handles sending the message from the phone from expo package. 
     const isAvailable = await SMS.isAvailableAsync();
     if (isAvailable && customerPhoneNumbers.length) {
       var billMessage = this.createMessageBill();
@@ -49,11 +53,13 @@ export default class TablePage extends React.Component {
   } ;
 
   createMessageBill () {
+    // Constructs the content of the message. 
     var {tableMembers} = this.state;
     var message = 'The bill for your table is:';
 
     for (var i = 0; i< tableMembers.length; i++){
       if (tableMembers[i].total){
+        // Adds bill for each customer. 
         message = message.concat(`\n${tableMembers[i].name}, ₪${tableMembers[i].total}.`);
       };
     };
@@ -65,6 +71,9 @@ export default class TablePage extends React.Component {
 	  return (
 	    <View style={styles.container}>
 	    	<View style={styles.tableMembersContainer}>
+          {
+            //Maps through all members of table and produces a responsive button for each.
+          }
           {
             tableMembers.map(person => (
               <Button 
@@ -80,8 +89,11 @@ export default class TablePage extends React.Component {
         <Button text={'For the Table'} handleButtonPress={this.handlePersonPress} customStyle={styles.button}/>
 	    	<View style={styles.SendBill}>
           {
+            //Button for sending the bill.
+          }
+          {
             hasBillBeenSent ? (<Text style={styles.emailMessage}> 
-                The bill has been emailed to members of the table
+                The bill has been sent to members of the table
               </Text>) : (<Button 
                 text={'Send Bill'}
                 handleButtonPress={this.sendBill} 

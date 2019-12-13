@@ -1,8 +1,19 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet} from 'react-native';
-import {BarCodeScanner} from 'expo-barcode-scanner';
+import { View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {BarCodeScanner} from 'expo-barcode-scanner'; // Bar code scanner component from expo.
+import { customerName } from '../data/customerDetails';
+import { addCustomerToTable } from '../data/tablesData';
+
 
 export default class ScannerPage extends React.Component {
+  handleCodeScan = ({type, data}) => {
+    var table = parseInt(data); //converts data from qr code and converts to number.
+    if(table == 8){ // If it matches one of the tables then adds the user to this table.
+      addCustomerToTable(8, customerName)
+    };
+    this.props.navigation.navigate('Thanks')
+  };
+  
   render() {
     return(
       <View style={styles.background}>
@@ -12,7 +23,7 @@ export default class ScannerPage extends React.Component {
           >
           <BarCodeScanner 
            style={StyleSheet.absoluteFillObject} 
-            onBarCodeScanned={() => this.props.navigation.navigate('Thanks')} 
+            onBarCodeScanned={this.handleCodeScan} 
           />
         </TouchableOpacity>
       </View>
@@ -22,8 +33,8 @@ export default class ScannerPage extends React.Component {
 
 const styles = StyleSheet.create({
   container:{
-    height: '50%',
-    width: '50%',
+    height: 300,
+    width: 300,
     alignItems: 'center',
     justifyContent: 'center',
   },

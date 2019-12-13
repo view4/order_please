@@ -29,6 +29,7 @@ export default class Order extends React.Component {
   };
 
   componentWillMount() {
+	  // Stores individuals on the table to the component. 
 	var tableMembers = Object.values(activeTable);
 
 	for (var i = 0; i < tableMembers.length; i++){
@@ -39,7 +40,7 @@ export default class Order extends React.Component {
 	  tableMember: activeTableMember,
 	  tableMembers
 	});
-
+	// Connects with firebase database to access menu.
 	let menuRef = firebase.database().ref('menu');
 	menuRef.on('value', (snapshot) => {
 		const menu = snapshot.val();
@@ -52,7 +53,7 @@ export default class Order extends React.Component {
 			...mains,
 			...desserts
 		];
-
+		// Stores menu in component data
 		this.setState({
 			starters, 
 			mains,
@@ -64,25 +65,29 @@ export default class Order extends React.Component {
   };
 
   searchDish = (val) => {
+	  // updates search field upon search. 
 	this.setState({searchField: val});
   };
 
   handleDishPress = (dish) => {
+	  //Adds dish to the individuals order in app data. 
 	addDishToTableMember(dish);
 	this.updateTableData()
   };
 
   updateTableData = () => {
+	  // Updates data for the table members and.
 	updateTableMember(activeTableNumber, activeTableMember);
 	changeActiveTableValue(tables[activeTableNumber])
   };
 
   handlePersonSwitch = (indexDiff) => {
+	// Handles person switching upon clicking the arrows next to name. 
 	var {tableMember, tableMembers} = this.state;
 
 	var currentIndex = tableMembers.indexOf(tableMember.name);
 	var futureIndex = currentIndex + indexDiff;
-
+	// Resets index if out of range.
 	if (futureIndex >= tableMembers.length) {
 		futureIndex = 0;
 	} else if (futureIndex < 0 ) {
@@ -91,7 +96,7 @@ export default class Order extends React.Component {
 
 	var newActiveTableMemberName = tableMembers[futureIndex];
 	var newActiveTableMember = activeTable[newActiveTableMemberName];
-
+	// Updates the active table member accordingly.
 	setActiveTableMember(newActiveTableMember);
 	this.setState({tableMember: newActiveTableMember});
   };
@@ -101,11 +106,12 @@ export default class Order extends React.Component {
 	
     var searchResults = [];
     for (var i = 0; i < allDishes.length; i++) {
+			// Checks for search through each dish in the menu.
 		if(allDishes[i].name.toLowerCase().includes(searchField.toLowerCase())) {
 		searchResults.push(allDishes[i]);
 		};
 	};
-	
+	// Maps through array of results to return components which represent the dish.
     const results = searchResults.map( dish => (
 		<Dish 
 			dish={dish}
@@ -120,6 +126,9 @@ export default class Order extends React.Component {
 
 	  return (
 	    <View style={styles.container}>
+			{
+				// Name of customer and arrows 
+			}
 			<View style={styles.nameContainer}>
 				<AntDesign name="leftcircleo" 
 					size={32} 
@@ -137,11 +146,17 @@ export default class Order extends React.Component {
 			inputValue={searchField}
 			onChangeText = {this.searchDish}
 			/>
+			{
+				// If There is a search fieldd return those results, otherwise show all other dishes. 
+			}
 			{searchField ? this.displaySearchResults() : (
 				<View style={styles.allDishes}>
 					<View style={styles.scrollContainer}>
 						<ScrollView>
 							<View style={styles.startersContainer}>
+								{
+									//MAps through starters
+								}
 								<Text style={styles.titles}> Starters</Text>
 								{starters.map( dish => (
 									<Dish 
@@ -152,6 +167,9 @@ export default class Order extends React.Component {
 								))}
 							</View>
 							<View style={styles.startersContainer}>
+								{
+									//Map through main dishes
+								}
 								<Text style={styles.titles}> Mains</Text>
 								{mains.map( dish => (
 									<Dish 
@@ -162,6 +180,9 @@ export default class Order extends React.Component {
 								))}
 							</View>
 							<View style={styles.startersContainer}>
+								{
+									//Map through dessert dishes
+								}
 								<Text style={styles.titles}> Deserts</Text>
 								{desserts.map( dish => (
 									<Dish 
